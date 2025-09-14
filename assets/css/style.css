@@ -140,7 +140,7 @@ body {
 } */
 
 a {
-  color: #82c0ff;
+  color: #042648;
 }
 
 /* main blockqoute */
@@ -356,7 +356,7 @@ h3 {
 }
 
 .overlay {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(3, 64, 95, 0.4);
   height: 100%;
   left: 0;
   position: absolute;
