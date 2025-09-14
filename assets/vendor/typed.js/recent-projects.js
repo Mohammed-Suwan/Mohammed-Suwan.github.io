@@ -19,8 +19,8 @@ const projects = [
 projects.sort((a, b) => new Date(b.date) - new Date(a.date));
 const container = document.getElementById('recent-projects');
 
-let displayedCount = 0;
-const projectsPerLoad = 1;
+let displayedCount = 1; // Number of projects currently displayed
+const projectsPerLoad = 2;
 
 function createProjectCard(project) {
         return `
