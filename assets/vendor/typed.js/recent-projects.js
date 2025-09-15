@@ -1,4 +1,4 @@
-
+console.log("projects.js loaded");
 const projects = [
   {
     title: "Music Player Web-App",
