@@ -6,7 +6,7 @@ const projects = [
     description: "An image translator based on the concept of adversarial networks (GANs)",
     tools: "Django, HTML, CSS, Bootstrap, SQLite, AWS S3, Heroku",
     details: "Trained a Pix2Pix conditional GAN with a U-Net generator and PatchGAN discriminator to convert satellite images into Google Maps-style visualizations using Python and PyTorch libraries.   Collaborated with a 4-member team using GitHub for version control and a Gantt chart to coordinate milestones. Preprocessed and augmented 2,000+ image pairs to improve model robustness and reduce spatial bias. Achieved an L1 loss of 6.47% and a Structural Similarity Index of 0.69, demonstrating effective reconstruction.", 
-    image: "/assets/img/gan.png",
+    image: "/assets/img/gan.jpg",
     //demo: "https://galvanic-music.herokuapp.com/",
     //repo: "https://github.com/varadbhogayata/music-player"
   },
@@ -17,7 +17,7 @@ const projects = [
     details: " Developed a C++-based GIS application prioritizing real-time access to safe navigation across Toronto. Implemented A* and multi-destination Dijkstra’s algorithms to compute the shortest and safest path. Integrated parallel programming and multithreading to boost runtime performance and reduce UI latency. Communicated with an external developer to gain API access for live Toronto crime data, anchoring the application around immediate safety awareness. Achieved search times under 100 ms, Toronto map load time of 4.22 seconds, and a System Usability Scale (SUS) score of 76, reflecting strong user experience and performance efficiency.", 
     tools: "Django, HTML, CSS, Bootstrap, SQLite, AWS S3, Heroku",
     details: "Trained a Pix2Pix conditional GAN with a U-Net generator and PatchGAN discriminator to convert satellite images into Google Maps-style visualizations using Python and PyTorch libraries.   Collaborated with a 4-member team using GitHub for version control and a Gantt chart to coordinate milestones. Preprocessed and augmented 2,000+ image pairs to improve model robustness and reduce spatial bias. Achieved an L1 loss of 6.47% and a Structural Similarity Index of 0.69, demonstrating effective reconstruction.", 
-    image: "/assets/img_new/GPssafety.png",
+    image: "/assets/img_new/Gpssafety.png",
     //demo: "https://galvanic-music.herokuapp.com/",
     //repo: "https://github.com/varadbhogayata/music-player"
   }
@@ -69,7 +69,7 @@ const projects = [
               <small>Accomplishments</small><i class="mdi-navigation-close right"></i>
             </span>
             <ul>${bulletsHTML}</ul>
-            <ul>${esc(p.description || "")}</ul>
+            
             <p>${esc(p.details || "")}</p>
             
             ${actions}
