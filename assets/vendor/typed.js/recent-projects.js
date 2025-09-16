@@ -1,118 +1,125 @@
-console.log("projects.js loaded");
+(function () {
 const projects = [
   {
-    title: "Music Player Web-App",
+    title: "GANS",
     date: "2025-07-10", // TODO: set actual date (YYYY-MM-DD)
-    description: "A music streaming web app based on Django",
+    description: "An image translator based on the concept of adversarial networks (GANs)",
     tools: "Django, HTML, CSS, Bootstrap, SQLite, AWS S3, Heroku",
-    image: "/assets/img/project-music-player.png",
+    details: "Trained a Pix2Pix conditional GAN with a U-Net generator and PatchGAN discriminator to convert satellite images into Google Maps-style visualizations using Python and PyTorch libraries.   Collaborated with a 4-member team using GitHub for version control and a Gantt chart to coordinate milestones. Preprocessed and augmented 2,000+ image pairs to improve model robustness and reduce spatial bias. Achieved an L1 loss of 6.47% and a Structural Similarity Index of 0.69, demonstrating effective reconstruction.", 
+    image: "/assets/img/gan.png",
     demo: "https://galvanic-music.herokuapp.com/",
     repo: "https://github.com/varadbhogayata/music-player"
   },
-  {
-    title: "Quiz Web-App",
-    date: "2025-06-05", // TODO: set actual date
-    description: "A quiz playing web app based on Django",
-    tools: "Django, HTML, CSS, Bootstrap, SQLite, Heroku",
-    image: "/assets/img/project-quizup-logo-1.png",
-    demo: "https://quiz-up-app.herokuapp.com/",
-    repo: "https://github.com/varadbhogayata/QuizUp"
-  },
-  {
-    title: "Blog Web-App",
-    date: "2025-05-15", // TODO: set actual date
-    description: "A simple and extensible blog web-app based on Flask.",
-    tools: "HTML, CSS, Bootstrap, Flask, SQLAlchemy, PostgreSQL, Python",
-    image: "/assets/img/project-blog-logo.jpg",
-    demo: "https://flask-heroku-blog.herokuapp.com/",
-    repo: "https://github.com/varadbhogayata/flask-blog"
-  },
-  {
-    title: "Visual Question Answering",
-    date: "2025-04-20", // TODO: set actual date
-    description: "An attention-based classification model that generates an answer for a given input image.",
-    tools: "CNN, LSTM, COCO, Python",
-    image: "/assets/img/project-aim_bert-bias.png",
-    demo: "",
-    repo: "https://github.com/varadbhogayata/visual-question-answering"
-  },
-  {
-    title: "Video Summarizer",
-    date: "2025-03-10", // TODO: set actual date
-    description: "A Seq2Seq model that generates a short summary of the given input video.",
-    tools: "CNN, LSTM, MSVD, Python",
-    image: "/assets/img/computer-vision-v2-04.png",
-    demo: "",
-    repo: "https://github.com/varadbhogayata/"
+   {
+    title: "GPSSafety",
+    date: "2025-05-10", // TODO: set actual date (YYYY-MM-DD)
+    description: "A GIS web application that helps users to find the safest path between two locations based on real-time crime data.",
+    details: " Developed a C++-based GIS application prioritizing real-time access to safe navigation across Toronto. Implemented A* and multi-destination Dijkstra’s algorithms to compute the shortest and safest path. Integrated parallel programming and multithreading to boost runtime performance and reduce UI latency. Communicated with an external developer to gain API access for live Toronto crime data, anchoring the application around immediate safety awareness. Achieved search times under 100 ms, Toronto map load time of 4.22 seconds, and a System Usability Scale (SUS) score of 76, reflecting strong user experience and performance efficiency.", 
+    tools: "Django, HTML, CSS, Bootstrap, SQLite, AWS S3, Heroku",
+    details: "Trained a Pix2Pix conditional GAN with a U-Net generator and PatchGAN discriminator to convert satellite images into Google Maps-style visualizations using Python and PyTorch libraries.   Collaborated with a 4-member team using GitHub for version control and a Gantt chart to coordinate milestones. Preprocessed and augmented 2,000+ image pairs to improve model robustness and reduce spatial bias. Achieved an L1 loss of 6.47% and a Structural Similarity Index of 0.69, demonstrating effective reconstruction.", 
+    image: "/assets/img_new/GPssafety.png",
+    //demo: "https://galvanic-music.herokuapp.com/",
+    //repo: "https://github.com/varadbhogayata/music-player"
   }
 ];
-projects.sort((a, b) => new Date(b.date) - new Date(a.date));
+  // 2) Config: show this many on first load; the rest appear when clicking "Load more"
+  const INITIAL_COUNT = 1;
 
-  // ------------- (C) DOM handles -------------
-  const container = document.getElementById("recent-projects");
-  const loadMoreBtn = document.getElementById("load-more-projects");
+  // 3) Helpers
+  const byDateDesc = (a, b) => new Date(b.date) - new Date(a.date);
 
-  // Show only the latest first
-  let visibleCount = 1;
-  const LOAD_STEP = 2; // how many to add each click
-
-  // ------------- (D) Render helpers -------------
-  function render() {
-    container.innerHTML = "";
-    for (let i = 0; i < Math.min(visibleCount, projects.length); i++) {
-      container.appendChild(projectCard(projects[i]));
-    }
-    // Hide the button when all are shown
-    loadMoreBtn.style.display = visibleCount >= projects.length ? "none" : "inline-flex";
+  function esc(s) {
+    // very light escape for text nodes/attrs
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
   }
 
-  function projectCard(p) {
-    const col = document.createElement("div");
-    col.className = "col s12 m6"; // Materialize grid; tweak for your CSS framework
+  function cardHTML(p) {
+    const bulletsHTML = (p.bullets || [])
+      .map((li) => `<li>${esc(li)}</li>`)
+      .join("");
 
-    const dateStr = new Date(p.date).toLocaleDateString(undefined, {
-      year: "numeric", month: "short", day: "2-digit"
-    });
+    // Optional action buttons (repo/demo)
+    const actions =
+      (p.repo || p.demo)
+        ? `<div class="card-action">
+             ${p.repo ? `<a href="${esc(p.repo)}" target="_blank" class="btn-flat waves-effect">Source</a>` : ""}
+             ${p.demo ? `<a href="${esc(p.demo)}" target="_blank" class="btn-flat waves-effect">Live Demo</a>` : ""}
+           </div>`
+        : "";
 
-    col.innerHTML = `
-      <div class="card hoverable">
-        ${p.image ? `
-          <div class="card-image">
-            <img src="${p.image}" alt="${escapeHtml(p.title)}">
-            <span class="card-title">${escapeHtml(p.title)}</span>
+    return `
+      <div class="col s12 m6 l4">
+        <div class="card medium">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img alt="Screenshot of ${esc(p.title)}" src="${esc(p.image)}" style="height: 100%; width: 100%" class="activator" />
           </div>
-        ` : `
           <div class="card-content">
-            <span class="card-title">${escapeHtml(p.title)}</span>
+            <span class="card-title activator teal-text hoverline">
+              ${esc(p.title)}<i class="mdi-navigation-more-vert right"></i>
+            </span>
+            <p>${esc(p.short || "")}</p>
           </div>
-        `}
-        <div class="card-content">
-          <p class="grey-text text-darken-1" style="margin-bottom:8px;">${dateStr}</p>
-          <p>${escapeHtml(p.description)}</p>
-          ${Array.isArray(p.tags) && p.tags.length
-            ? `<div style="margin-top:10px;">${p.tags.map(t => `<span class="chip">${escapeHtml(t)}</span>`).join(" ")}</div>`
-            : ""}
-        </div>
-        <div class="card-action">
-          ${p.link ? `<a href="${p.link}" target="_blank" rel="noopener">View project</a>` : ""}
+          <div class="card-reveal">
+            <span class="card-title brown-text">
+              <small>Accomplishments</small><i class="mdi-navigation-close right"></i>
+            </span>
+            <ul>${bulletsHTML}</ul>
+            ${actions}
+          </div>
         </div>
       </div>
     `;
-    return col;
   }
 
-  function escapeHtml(str) {
-    return String(str).replace(/[&<>"']/g, s => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
-    }[s]));
+  // 4) Render logic
+  let renderedCount = 0;
+  let sorted = [];
+
+  function renderNext(n) {
+    const container = document.getElementById("recent-projects");
+    if (!container) return;
+
+    const next = sorted.slice(renderedCount, renderedCount + n);
+    const html = next.map(cardHTML).join("");
+    container.insertAdjacentHTML("beforeend", html);
+    renderedCount += next.length;
+
+    // Hide/disable button if done
+    const btn = document.getElementById("load-more-projects");
+    if (btn) {
+      if (renderedCount >= sorted.length) {
+        btn.disabled = true;
+        btn.classList.add("disabled");
+        btn.style.opacity = "0.6";
+        btn.textContent = "All projects shown";
+      } else {
+        btn.disabled = false;
+        btn.classList.remove("disabled");
+        btn.style.opacity = "";
+        btn.textContent = "Load more";
+      }
+    }
   }
 
-  // ------------- (E) Wire up "Load more" -------------
-  loadMoreBtn.addEventListener("click", () => {
-    visibleCount = Math.min(visibleCount + LOAD_STEP, projects.length);
-    render();
+  // 5) Init
+  document.addEventListener("DOMContentLoaded", function () {
+    // Sort newest → oldest
+    sorted = projects.slice().sort(byDateDesc);
+
+    // Render the most recent item(s)
+    renderNext(Math.min(INITIAL_COUNT, sorted.length));
+
+    // Wire the button to render the rest (older)
+    const btn = document.getElementById("load-more-projects");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        // Load *all remaining* older projects
+        renderNext(sorted.length - renderedCount);
+      });
+    }
   });
-
-  // Initial render: only latest project
-  render();
-
+})();
