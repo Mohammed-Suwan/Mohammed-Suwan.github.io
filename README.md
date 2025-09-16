@@ -18,3 +18,7 @@ ScreenShot for Acitvity 3
 ScreenShot for Acitvity 4
 
 ![Repo Screenshot](ECE444_PRA1_Activity4.png)
+
+ScreenShot for Acitvity 5
+
+![Repo Screenshot](ECE444_PRA1_Activity5.png)
