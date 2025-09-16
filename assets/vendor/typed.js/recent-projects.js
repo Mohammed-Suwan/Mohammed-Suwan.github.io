@@ -68,6 +68,9 @@ const projects = [
               <small>Accomplishments</small><i class="mdi-navigation-close right"></i>
             </span>
             <ul>${bulletsHTML}</ul>
+            <ul>${esc(p.description || "")}</ul>
+            <p>${esc(p.details || "")}</p>
+            
             ${actions}
           </div>
         </div>
