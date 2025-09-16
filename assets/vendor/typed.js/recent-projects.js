@@ -7,7 +7,7 @@ const projects = [
     tools: "Django, HTML, CSS, Bootstrap, SQLite, AWS S3, Heroku",
     details: "Trained a Pix2Pix conditional GAN with a U-Net generator and PatchGAN discriminator to convert satellite images into Google Maps-style visualizations using Python and PyTorch libraries.   Collaborated with a 4-member team using GitHub for version control and a Gantt chart to coordinate milestones. Preprocessed and augmented 2,000+ image pairs to improve model robustness and reduce spatial bias. Achieved an L1 loss of 6.47% and a Structural Similarity Index of 0.69, demonstrating effective reconstruction.", 
     image: "/assets/img/gan.jpg",
-    //demo: "https://galvanic-music.herokuapp.com/",
+    //demo: "https://galvanic-musi.herokuapp.com/",
     //repo: "https://github.com/varadbhogayata/music-player"
   },
    {
